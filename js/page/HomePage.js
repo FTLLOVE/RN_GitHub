@@ -9,6 +9,8 @@ import FavoritePage from "./FavoritePage"
 import MyPage from "./MyPage"
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import NavigationUtil from "../navigator/NavigationUtil"
+import DynamicTabNavigator from "../navigator/DynamicTabNavigator"
 
 export default class HomePage extends PureComponent {
 
@@ -67,7 +69,6 @@ export default class HomePage extends PureComponent {
 								/>
 							)
 						}
-
 					}
 				})
 			)
@@ -75,6 +76,7 @@ export default class HomePage extends PureComponent {
 	}
 
 	render() {
+		NavigationUtil.navigation = this.props.navigation
 		const Tab = this._tabNavigator()
 		return (
 			<Tab/>

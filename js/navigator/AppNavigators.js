@@ -8,27 +8,28 @@ import HomePage from "../page/HomePage"
 import DetailPage from "../page/DetailPage"
 
 const InitNavigator = createStackNavigator({
-    WelcomePage: {
-        screen: WelcomePage,
-        navigationOptions: {
-            header: null
-        }
-    }
+	WelcomePage: {
+		screen: WelcomePage,
+		navigationOptions: {
+			header: null
+		}
+	}
 })
 
 const MainNavigator = createStackNavigator({
-    HomePage: {
-        screen: HomePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    DetailPage: {
-        screen: DetailPage
-    }
+	HomePage: {
+		screen: HomePage,
+		navigationOptions: {
+			header: null
+		}
+	},
+	DetailPage: {
+		screen: DetailPage,
+		navigationOptions: {}
+	}
 })
 
 export default createAppContainer(createSwitchNavigator({
-    Init: InitNavigator,
-    Main: MainNavigator
+	Init: InitNavigator,
+	Main: MainNavigator
 }))
