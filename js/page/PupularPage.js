@@ -8,28 +8,42 @@ import NavigationUtil from "../navigator/NavigationUtil"
 
 export default class PopularPage extends PureComponent {
 
+	constructor(props) {
+		super(props);
+		this.tabs = ['优惠', '物流', '订阅1', '订阅2', '订阅3', '订阅4']
+	}
+
+	_genTabs() {
+		const tabs = {}
+		this.tabs.forEach((item, index) => {
+			tabs[`tab${index}`] = {
+				screen: (props) => <PopularTab {...props} tabLabel={item}/>,
+				navigationOptions: {
+					title: item
+				}
+			}
+		})
+		return tabs
+	}
+
 	render() {
+		this._genTabs()
 		const TabNavigator = createAppContainer(
-			createMaterialTopTabNavigator({
-				PopularTab1: {
-					screen: PopularTab,
-					navigationOptions: {
-						title: 'tab1'
-					}
-				},
-				PopularTab2: {
-					screen: PopularTab,
-					navigationOptions: {
-						title: 'tab2'
-					}
-				},
-				PopularTab3: {
-					screen: PopularTab,
-					navigationOptions: {
-						title: 'tab3'
+			createMaterialTopTabNavigator(
+				this._genTabs(), {
+					tabBarOptions: {
+						animationEnabled: false,
+						tabStyle: styles.tabStyle,
+						upperCaseLabel: false,
+						scrollEnabled: true,
+						style: {
+							backgroundColor: '#678'
+						},
+						indicatorStyle: styles.indicatorStyle,
+
 					}
 				}
-			})
+			)
 		)
 
 		return (
@@ -42,7 +56,9 @@ export default class PopularPage extends PureComponent {
 }
 
 class PopularTab extends PureComponent {
+
 	render() {
+
 		const {tabLabel} = this.props
 		return (
 			<View style={{flex: 1}}>
@@ -63,6 +79,15 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+		backgroundColor: '#fff'
+	},
+
+	tabStyle: {
+		minWidth: 50
+	},
+
+	indicatorStyle: {
+		height: 2,
 		backgroundColor: '#fff'
 	}
 })
