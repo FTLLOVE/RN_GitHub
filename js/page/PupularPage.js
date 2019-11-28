@@ -10,6 +10,7 @@ export default class PopularPage extends PureComponent {
 
 	constructor(props) {
 		super(props);
+		console.disableYellowBox = true
 		this.tabs = ['优惠', '物流', '订阅1', '订阅2', '订阅3', '订阅4']
 	}
 
@@ -58,7 +59,6 @@ export default class PopularPage extends PureComponent {
 class PopularTab extends PureComponent {
 
 	render() {
-
 		const {tabLabel} = this.props
 		return (
 			<View style={{flex: 1}}>

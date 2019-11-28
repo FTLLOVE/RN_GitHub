@@ -1,5 +1,4 @@
-#图标
-`
-最热 whatshot
-趋势 
-`
+## redux & react-redux
+### 1. 创建store(js/store)
+### 2. 创建themeReducer(js/reducer/theme)
+### 3. 创建themeAction(js/action/theme)

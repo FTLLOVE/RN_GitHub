@@ -1,5 +1,5 @@
 /**
- * 详情页面 by flt
+ * 详情页面 by ftl
  */
 import React, {PureComponent} from 'react'
 import {View, Text} from 'react-native'

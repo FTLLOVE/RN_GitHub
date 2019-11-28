@@ -2,26 +2,30 @@
  * 我的页面 by ftl
  */
 import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, Button} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
+import {connect} from 'react-redux'
+import actions from '../action'
 
-export default class MyPage extends PureComponent {
+class MyPage extends PureComponent {
 	render() {
-		const {navigation} = this.props
 		return (
 			<View style={styles.container}>
 				<Text>MyPage</Text>
 				<Text onPress={() => {
-					navigation.setParams({
-						theme: {
-							tintColor: 'green',
-							updateTime: new Date().getTime()
-						}
-					})
+					this.props.onThemeChange('#639')
 				}}>改变主题色</Text>
 			</View>
 		)
 	}
 }
+
+const mapDispatchToProps = dispatch => ({
+	onThemeChange(val) {
+		dispatch(actions.onThemeChange(val))
+	}
+})
+
+export default connect(null, mapDispatchToProps)(MyPage)
 
 const styles = StyleSheet.create({
 	container: {

@@ -10,13 +10,15 @@ import MyPage from "../page/MyPage"
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {BottomTabBar} from 'react-navigation-tabs'
+import {connect} from 'react-redux'
+import TabBarBottom from "react-navigation-tabs/dist/views/BottomTabBar";
 
 const TABS = {
 	PopularPage: {
 		screen: PopularPage,
 		navigationOptions: {
 			tabBarLabel: "最热",
-			tabBarIcon: ({tintColor, focused}) => (
+			tabBarIcon: ({tintColor}) => (
 				<MaterialIcons
 					name={'whatshot'}
 					size={26}
@@ -29,7 +31,7 @@ const TABS = {
 		screen: TrendingPage,
 		navigationOptions: {
 			tabBarLabel: "趋势",
-			tabBarIcon: ({tintColor, focused}) => (
+			tabBarIcon: ({tintColor}) => (
 				<MaterialIcons
 					name={'trending-up'}
 					size={26}
@@ -42,7 +44,7 @@ const TABS = {
 		screen: FavoritePage,
 		navigationOptions: {
 			tabBarLabel: "收藏",
-			tabBarIcon: ({tintColor, focused}) => (
+			tabBarIcon: ({tintColor}) => (
 				<MaterialIcons
 					name={'favorite'}
 					size={26}
@@ -55,7 +57,7 @@ const TABS = {
 		screen: MyPage,
 		navigationOptions: {
 			tabBarLabel: "我的",
-			tabBarIcon: ({tintColor, focused}) => (
+			tabBarIcon: ({tintColor}) => (
 				<FontAwesome5
 					name={'user'}
 					size={24}
@@ -66,20 +68,29 @@ const TABS = {
 	}
 }
 
-export default class DynamicTabNavigator extends PureComponent {
+class DynamicTabNavigator extends PureComponent {
 
 	constructor(prop) {
 		super(prop)
-		console.disableYellowBox = true
 	}
 
 	_tabNavigator() {
+		if (this.tabs) {
+			return this.tabs
+		}
 		const {PopularPage, TrendingPage, FavoritePage, MyPage} = TABS
 		const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage} //动态配置底部导航条
 		// PopularPage.navigationOptions.tabBarLabel = "最新" // 动态修改底部导航栏的参数
-		return createAppContainer(
+		return this.tabs = createAppContainer(
 			createBottomTabNavigator(tabs, {
-				tabBarComponent: TabBarComponent
+				tabBarComponent: (props) => {
+					return (
+						<BottomTabBar
+							{...props}
+							activeTintColor={this.props.theme}
+						/>
+					)
+				}
 			})
 		)
 	}
@@ -92,30 +103,8 @@ export default class DynamicTabNavigator extends PureComponent {
 }
 
 
-class TabBarComponent extends PureComponent {
+const mapStateToProps = state => ({
+	theme: state.theme.theme
+})
 
-	constructor(props) {
-		super(props);
-		this.theme = {
-			tintColor: props.activeTintColor,
-			updateTime: new Date().getTime()
-		}
-	}
-
-	render() {
-		const {routes, index} = this.props.navigation.state
-		if (routes[index].params) {
-			const {theme} = routes[index].params
-			if (theme && theme.updateTime > this.theme.updateTime) {
-				this.theme = theme
-			}
-		}
-
-		return (
-			<BottomTabBar
-				{...this.props}
-				activeTintColor={this.theme.tintColor || this.props.activeTintColor}
-			/>
-		)
-	}
-}
+export default connect(mapStateToProps)(DynamicTabNavigator)
