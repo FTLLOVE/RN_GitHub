@@ -4,9 +4,31 @@
 import React, {PureComponent} from 'react'
 import NavigationUtil from "../navigator/NavigationUtil"
 import DynamicTabNavigator from "../navigator/DynamicTabNavigator"
+import {BackHandler} from 'react-native'
+import {NavigationActions} from 'react-navigation'
+import {connect} from 'react-redux'
 
-export default class HomePage extends PureComponent {
+class HomePage extends PureComponent {
 
+	componentDidMount(): void {
+		BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
+	}
+
+	componentWillUnmount(): void {
+		BackHandler.removeEventListener("hardwareBackPress", this.onBackPress)
+	}
+
+	/**
+	 * 处理安卓物理返回键
+	 */
+	onBackPress = () => {
+		const {dispatch, nav} = this.props
+		if (nav.routes[1].index === 0) {
+			return false
+		}
+		dispatch(NavigationActions.back())
+		return true
+	}
 
 	render() {
 		NavigationUtil.navigation = this.props.navigation
@@ -15,3 +37,9 @@ export default class HomePage extends PureComponent {
 		)
 	}
 }
+
+const mapStateToProps = state => ({
+	nav: state.nav
+})
+
+export default connect(mapStateToProps)(HomePage)
