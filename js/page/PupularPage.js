@@ -72,6 +72,14 @@ class PopularTab extends PureComponent {
 				<Button title={'Fetch'} onPress={() => {
 					NavigationUtil.goPage(null, 'FetchPage')
 				}}/>
+
+				<Button title={'AsyncStorage'} onPress={() => {
+					NavigationUtil.goPage(null, 'AsyncStoragePage')
+				}}/>
+
+				<Button title={'离线缓存'} onPress={() => {
+					NavigationUtil.goPage(null, 'DataStorePage')
+				}}/>
 			</View>
 		)
 	}

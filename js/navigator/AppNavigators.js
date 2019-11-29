@@ -7,6 +7,8 @@ import WelcomePage from "../page/WelcomePage"
 import HomePage from "../page/HomePage"
 import DetailPage from "../page/DetailPage"
 import FetchPage from '../page/demo/FetchPage'
+import AsyncStoragePage from "../page/demo/AsyncStoragePage"
+import DataStorePage from "../page/demo/DataStorePage"
 import {connect} from 'react-redux'
 import {createReactNavigationReduxMiddleware, reduxifyNavigator} from 'react-navigation-redux-helpers'
 
@@ -34,6 +36,12 @@ const MainNavigator = createStackNavigator({
 	},
 	FetchPage: {
 		screen: FetchPage
+	},
+	AsyncStoragePage: {
+		screen: AsyncStoragePage
+	},
+	DataStorePage: {
+		screen: DataStorePage
 	}
 })
 

@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native'
+import {View, Text, StyleSheet, TextInput, Button,AsyncStorage} from 'react-native'
 
 export default class FetchPage extends PureComponent {
 

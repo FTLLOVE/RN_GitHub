@@ -11,7 +11,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {BottomTabBar} from 'react-navigation-tabs'
 import {connect} from 'react-redux'
-import TabBarBottom from "react-navigation-tabs/dist/views/BottomTabBar";
 
 const TABS = {
 	PopularPage: {
