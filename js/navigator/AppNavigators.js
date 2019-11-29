@@ -6,6 +6,7 @@ import {createAppContainer, createSwitchNavigator, createStackNavigator} from 'r
 import WelcomePage from "../page/WelcomePage"
 import HomePage from "../page/HomePage"
 import DetailPage from "../page/DetailPage"
+import FetchPage from '../page/demo/FetchPage'
 import {connect} from 'react-redux'
 import {createReactNavigationReduxMiddleware, reduxifyNavigator} from 'react-navigation-redux-helpers'
 
@@ -30,6 +31,9 @@ const MainNavigator = createStackNavigator({
 	DetailPage: {
 		screen: DetailPage,
 		navigationOptions: {}
+	},
+	FetchPage: {
+		screen: FetchPage
 	}
 })
 

@@ -2,7 +2,7 @@
  * 最热页面 by ftl
  */
 import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native'
+import {View, Text, StyleSheet, SafeAreaView, Button} from 'react-native'
 import {createMaterialTopTabNavigator, createAppContainer} from 'react-navigation'
 import NavigationUtil from "../navigator/NavigationUtil"
 
@@ -68,6 +68,10 @@ class PopularTab extends PureComponent {
 						navigation: this.props.navigation
 					}, 'DetailPage')
 				}}>跳转到详情</Text>
+
+				<Button title={'Fetch'} onPress={() => {
+					NavigationUtil.goPage(null, 'FetchPage')
+				}}/>
 			</View>
 		)
 	}
