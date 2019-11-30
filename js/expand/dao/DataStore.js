@@ -12,10 +12,12 @@ export default class DataStore {
 			this.fetchLocalData(url)
 				.then((wrapData) => {
 					if (wrapData && DataStore.checkTimestampValid(wrapData.timestamp)) {
+						console.log("本地数据")
 						resolve(wrapData)
 					} else {
 						this.fetchNetData(url)
 							.then((data) => {
+								console.log("网络数据")
 								resolve(this._warpData(data))
 							})
 							.catch(error => {
