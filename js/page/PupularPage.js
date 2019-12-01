@@ -2,12 +2,23 @@
  * 最热页面 by ftl
  */
 import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, SafeAreaView, FlatList, RefreshControl} from 'react-native'
+import {
+	View,
+	Text,
+	StyleSheet,
+	SafeAreaView,
+	FlatList,
+	RefreshControl,
+	ActivityIndicator,
+} from 'react-native'
 import {connect} from 'react-redux'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import DataStore from "../expand/dao/DataStore"
 import PopularItem from "../common/PopularItem"
 import CommonActivityIndicator from '../common/CommonActivityIndicator'
+import CommonDimensions from "../common/CommonDimensions"
+
+const PAGES = 34;
 
 class PopularPage extends PureComponent {
 
@@ -20,7 +31,8 @@ class PopularPage extends PureComponent {
 			refreshing: false,
 			selectedLabel: "",
 			showIndicator: false,
-			currentPage: 1
+			currentPage: 1,
+			loadStatus: 0, // 0:隐藏footer 1:加载完毕 2:加载中,
 		}
 	}
 
@@ -41,12 +53,36 @@ class PopularPage extends PureComponent {
 		)
 	}
 
+	renderFooter() {
+		const {loadStatus} = this.state
+		if (loadStatus === 1) {
+			return (
+				<View style={{alignItems: 'center', marginTop: 10, marginBottom: 10}}>
+					<Text style={{alignItems: 'center', fontSize: 14, color: '#ccc'}}>无更多内容</Text>
+				</View>
+			)
+		} else if (loadStatus === 2) {
+			return (
+				<View style={{height: 30, width: CommonDimensions.width, marginTop: 10}}>
+					<ActivityIndicator
+						size={'small'}
+						animating={this.state.loadStatus === 2}
+					/>
+				</View>
+			)
+		} else {
+			return (
+				<View style={{alignItems: 'center'}}></View>
+			)
+		}
+	}
+
 	renderContent() {
 		return (
 			<FlatList
 				data={this.state.contentList}
 				renderItem={data => this.renderItem(data)}
-				keyExtractor={item => "" + item.id}
+				keyExtractor={item => item.id}
 				refreshControl={
 					<RefreshControl
 						colors={['#f26966', '#00ff00', '#0000ff']}
@@ -55,11 +91,50 @@ class PopularPage extends PureComponent {
 						onRefresh={this.onRefresh.bind(this)}
 					/>
 				}
+				ListFooterComponent={this.renderFooter.bind(this)}
+				onEndReachedThreshold={0.5}
+				onEndReached={() => {
+					if (this.canLoading) {
+						this._onEndReached()
+						this.canLoading = false
+					}
+				}}
+				onMomentumScrollBegin={() => {
+					this.canLoading = true
+				}}
 			/>
 		)
 	}
 
-	requestData(val) {
+	_onEndReached() {
+		if (this.state.currentPage === PAGES) {
+			this.setState({
+				loadStatus: 1
+			})
+			return
+		}
+		this.setState({
+			loadStatus: 2,
+		})
+		let keyword = ""
+		let {selectedLabel, currentPage} = this.state
+		if (selectedLabel === '' || selectedLabel === undefined || selectedLabel === null) {
+			keyword = this.state.tabs[0]
+		} else {
+			keyword = selectedLabel
+		}
+		this.timer = setTimeout(() => {
+			this.requestData(keyword, currentPage + 1)
+		}, 1000)
+		this.setState({
+			currentPage: this.state.currentPage + 1
+		})
+	}
+
+	requestData(val, currentPage) {
+		if (currentPage === 0) {
+			currentPage = 1
+		}
 		let keyword = "";
 		if (val === "") {
 			keyword = this.state.tabs[0]
@@ -68,13 +143,14 @@ class PopularPage extends PureComponent {
 		} else {
 			keyword = val
 		}
-		let url = `https://api.github.com/search/repositories?q=${keyword}&sort=stars&page=${this.state.currentPage}`
+		let url = `https://api.github.com/search/repositories?q=${keyword}&sort=stars&page=${currentPage}`
 		this.DataStore.fetchData(url)
 			.then(response => {
 				this.setState({
-					contentList: response.data.items,
+					contentList: this.state.contentList.concat(response.data.items),
 					refreshing: false,
-					showIndicator: false
+					showIndicator: false,
+					loadStatus: 0
 				})
 			})
 			.catch(error => {
@@ -88,14 +164,18 @@ class PopularPage extends PureComponent {
 		this.setState({
 			showIndicator: true
 		})
-		this.requestData(0);
+		this.requestData(0, 1);
+	}
+
+	componentWillUnmount() {
+		clearTimeout(this.timer)
 	}
 
 	onRefresh() {
 		this.setState({
 			refreshing: true
 		})
-		this.requestData(this.state.selectedLabel)
+		this.requestData(this.state.selectedLabel, 0)
 	}
 
 	render() {
@@ -112,9 +192,11 @@ class PopularPage extends PureComponent {
 					renderTabBar={() => <ScrollableTabBar/>}
 					onChangeTab={(val) => {
 						this.setState({
-							showIndicator: true
+							showIndicator: true,
+							contentList: [],
+							currentPage: 1
 						})
-						this.requestData(val.i)
+						this.requestData(val.i, 0)
 						this.setState({
 							selectedLabel: this.state.tabs[val.i]
 						})
