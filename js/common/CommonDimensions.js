@@ -1,3 +1,6 @@
+/**
+ * CommonDimensions.js by ftl
+ */
 import {Dimensions} from 'react-native'
 
 export default CommonDimensions = {

@@ -1,21 +1,32 @@
-import React, {PureComponent} from 'react'
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native'
+/**
+ * PopularItem.js by ftl
+ */
+import React, { PureComponent } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
+import LazyImage from "animated-lazy-image"
+import NavigationUtil from '../navigator/NavigationUtil'
 
 export default class PopularItem extends PureComponent {
 
 	render() {
-		const {full_name, owner, description, forks} = this.props
+		const { full_name, owner, description, forks, html_url } = this.props
+		let o = {
+			html_url: html_url
+		}
 		return (
 			<TouchableOpacity style={styles.container} onPress={() => {
+				NavigationUtil.goPage(o, "DetailPage")
 			}}>
 				<Text style={styles.title}>{full_name}</Text>
 				<Text style={styles.description} numberOfLines={2}>{description}</Text>
 				<View style={styles.bottomContainer}>
 					<View style={styles.bottomContainer}>
 						<Text>Author: </Text>
-						<Image source={{uri: owner.avatar_url}} style={{width: 25, height: 25}}/>
+						<LazyImage
+							source={owner.avatar_url}
+							style={{ width: 25, height: 25 }}
+						/>
 					</View>
 
 					<View style={styles.bottomContainer}
@@ -48,7 +59,7 @@ const styles = StyleSheet.create({
 		borderRadius: 3,
 		marginTop: 10,
 		shadowColor: 'gray',
-		shadowOffset: {width: 0.5, height: 0.5},
+		shadowOffset: { width: 0.5, height: 0.5 },
 		shadowOpacity: 0.4,
 		shadowRadius: 1,
 		elevation: 2

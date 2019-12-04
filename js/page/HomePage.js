@@ -10,6 +10,11 @@ import {connect} from 'react-redux'
 
 class HomePage extends PureComponent {
 
+	constructor(props) {
+		super(props);
+	}
+
+
 	componentDidMount(): void {
 		BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
 	}

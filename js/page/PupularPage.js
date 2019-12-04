@@ -1,7 +1,7 @@
 /**
  * 最热页面 by ftl
  */
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import {
 	View,
 	Text,
@@ -10,13 +10,15 @@ import {
 	FlatList,
 	RefreshControl,
 	ActivityIndicator,
+	DeviceInfo
 } from 'react-native'
-import {connect} from 'react-redux'
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
+import { connect } from 'react-redux'
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
 import DataStore from "../expand/dao/DataStore"
 import PopularItem from "../common/PopularItem"
 import CommonActivityIndicator from '../common/CommonActivityIndicator'
 import CommonDimensions from "../common/CommonDimensions"
+import CommonNavigationBar from '../common/CommonNavigationBar'
 
 const PAGES = 34;
 
@@ -37,7 +39,7 @@ class PopularPage extends PureComponent {
 	}
 
 	renderItem(data) {
-		let {item} = data
+		let { item } = data
 		return (
 			<PopularItem
 				{...item}
@@ -54,16 +56,16 @@ class PopularPage extends PureComponent {
 	}
 
 	renderFooter() {
-		const {loadStatus} = this.state
+		const { loadStatus } = this.state
 		if (loadStatus === 1) {
 			return (
-				<View style={{alignItems: 'center', marginTop: 10, marginBottom: 10}}>
-					<Text style={{alignItems: 'center', fontSize: 14, color: '#ccc'}}>无更多内容</Text>
+				<View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
+					<Text style={{ alignItems: 'center', fontSize: 14, color: '#ccc' }}>无更多内容</Text>
 				</View>
 			)
 		} else if (loadStatus === 2) {
 			return (
-				<View style={{height: 30, width: CommonDimensions.width, marginTop: 10}}>
+				<View style={{ height: 30, width: CommonDimensions.width, marginTop: 10 }}>
 					<ActivityIndicator
 						size={'small'}
 						animating={this.state.loadStatus === 2}
@@ -72,7 +74,7 @@ class PopularPage extends PureComponent {
 			)
 		} else {
 			return (
-				<View style={{alignItems: 'center'}}></View>
+				<View style={{ alignItems: 'center' }}></View>
 			)
 		}
 	}
@@ -117,7 +119,7 @@ class PopularPage extends PureComponent {
 			loadStatus: 2,
 		})
 		let keyword = ""
-		let {selectedLabel, currentPage} = this.state
+		let { selectedLabel, currentPage } = this.state
 		if (selectedLabel === '' || selectedLabel === undefined || selectedLabel === null) {
 			keyword = this.state.tabs[0]
 		} else {
@@ -179,17 +181,25 @@ class PopularPage extends PureComponent {
 	}
 
 	render() {
+		let statusBar = {
+			barStyle: 'light-content'
+		}
+		let navigationBar = <CommonNavigationBar
+			title={'最热'}
+			statusBar={statusBar}
+		/>
 		return (
-			<SafeAreaView style={{flex: 1}}>
+			<View style={{ flex: 1, marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0 }}>
+				{navigationBar}
 				<ScrollableTabView
 					style={styles.container}
 					tabBarBackgroundColor={'#fff'}
 					tabBarActiveTextColor={'#f26966'}
-					tabBarUnderlineStyle={{backgroundColor: '#f26966'}}
+					tabBarUnderlineStyle={{ backgroundColor: '#f26966' }}
 					tabBarInactiveTextColor={'#555'}
-					tabBarTextStyle={{fontSize: 14, marginTop: 13}}
+					tabBarTextStyle={{ fontSize: 14 }}
 					scrollWithoutAnimation={true}
-					renderTabBar={() => <ScrollableTabBar/>}
+					renderTabBar={() => <ScrollableTabBar />}
 					onChangeTab={(val) => {
 						this.setState({
 							showIndicator: true,
@@ -212,7 +222,7 @@ class PopularPage extends PureComponent {
 							</View>))
 					}
 				</ScrollableTabView>
-			</SafeAreaView>
+			</View>
 
 		)
 	}
@@ -220,10 +230,9 @@ class PopularPage extends PureComponent {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		// flex: 1,
 	},
 	textStyle: {
-		flex: 1,
 		fontSize: 20,
 	}
 })

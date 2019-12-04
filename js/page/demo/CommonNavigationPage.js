@@ -2,14 +2,14 @@
  * 我的页面 by ftl
  */
 import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, DeviceInfo } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import actions from '../action'
 import CommonNavigationBar from "../common/CommonNavigationBar"
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-class MyPage extends PureComponent {
+class CommonNavigationPage extends PureComponent {
 
 	renderLeftButton() {
 		return (
@@ -45,8 +45,7 @@ class MyPage extends PureComponent {
 
 	render() {
 		let statusBar = {
-			barStyle: 'light-content',
-			// backgroundColor: '#f26966'
+			barStyle: 'light-content'
 		}
 		let navigationBar = <CommonNavigationBar
 			title={'我的'}
@@ -70,11 +69,11 @@ const mapDispatchToProps = dispatch => ({
 	}
 })
 
-export default connect(null, mapDispatchToProps)(MyPage)
+export default connect(null, mapDispatchToProps)(CommonNavigationPage)
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0
+		marginTop: 30
 	}
 })

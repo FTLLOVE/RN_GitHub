@@ -1,16 +1,103 @@
 /**
  * 详情页面 by ftl
  */
-import React, {PureComponent} from 'react'
-import {View, Text} from 'react-native'
+import React, { PureComponent } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, DeviceInfo } from 'react-native'
+import CommonNavigationBar from '../common/CommonNavigationBar'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import NavigationUtil from '../navigator/NavigationUtil'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import WebView from 'react-native-webview'
 
 export default class DetailPage extends PureComponent {
-	render() {
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			html_url: this.props.navigation.state.params.html_url,
+			canGoBack: false
+		}
+	}
+
+	handleBack() {
+		if (this.state.canGoBack) {
+			this.webView.goBack()
+		} else {
+			NavigationUtil.goBack(this.props.navigation)
+		}
+	}
+
+	renderLeftButton() {
 		return (
-			<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff'}}>
-				<Text>DetailPage</Text>
+			<TouchableOpacity onPress={this.handleBack.bind(this)}>
+				<View style={{ paddingLeft: 10 }}>
+					<Ionicons
+						name={'ios-arrow-back'}
+						size={24}
+						style={{ color: '#fff' }}
+					/>
+				</View>
+			</TouchableOpacity>
+		)
+	}
+
+	renderRightButton() {
+		return (
+			<View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 10 }}>
+				<TouchableOpacity style={{ marginRight: 5 }}>
+					<View>
+						<AntDesign
+							name={'staro'}
+							size={24}
+							style={{ color: '#fff' }}
+						/>
+					</View>
+				</TouchableOpacity>
+
+				<TouchableOpacity>
+					<View>
+						<EvilIcons
+							name={'share-google'}
+							size={28}
+							style={{ color: '#fff' }}
+						/>
+					</View>
+				</TouchableOpacity>
 			</View>
 		)
 	}
 
+	onNavigationStateChange(e) {
+		console.log("e: ", e)
+		this.setState({
+			canGoBack: e.canGoBack
+		})
+	}
+
+	render() {
+		return (
+			<View style={styles.container}>
+				<CommonNavigationBar
+					title={'详情页面'}
+					leftButton={this.renderLeftButton()}
+					rightButton={this.renderRightButton()}
+					titleStyle={{ fontSize: 18 }}
+				/>
+				<WebView
+					ref={webView => this.webView = webView}
+					source={{ uri: this.state.html_url }}
+					startInLoadingState={true}
+					onNavigationStateChange={e => this.onNavigationStateChange(e)}
+				/>
+			</View>
+		)
+	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0
+	}
+})

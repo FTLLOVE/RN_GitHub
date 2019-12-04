@@ -2,15 +2,15 @@
  * 公共导航 by ftl
  */
 import React from 'react'
-import {createAppContainer, createSwitchNavigator, createStackNavigator} from 'react-navigation'
+import { createAppContainer, createSwitchNavigator, createStackNavigator } from 'react-navigation'
 import WelcomePage from "../page/WelcomePage"
 import HomePage from "../page/HomePage"
 import DetailPage from "../page/DetailPage"
 import FetchPage from '../page/demo/FetchPage'
 import AsyncStoragePage from "../page/demo/AsyncStoragePage"
 import DataStorePage from "../page/demo/DataStorePage"
-import {connect} from 'react-redux'
-import {createReactNavigationReduxMiddleware, reduxifyNavigator} from 'react-navigation-redux-helpers'
+import { connect } from 'react-redux'
+import { createReactNavigationReduxMiddleware, reduxifyNavigator } from 'react-navigation-redux-helpers'
 
 export const rootCom = "Init"
 
@@ -32,7 +32,9 @@ const MainNavigator = createStackNavigator({
 	},
 	DetailPage: {
 		screen: DetailPage,
-		navigationOptions: {}
+		navigationOptions: {
+			header: null
+		}
 	},
 	FetchPage: {
 		screen: FetchPage
