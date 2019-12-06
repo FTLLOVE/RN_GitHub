@@ -1,9 +1,9 @@
 /**
  * 我的页面 by ftl
  */
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, DeviceInfo } from 'react-native'
-import { connect } from 'react-redux'
+import React, {PureComponent} from 'react'
+import {View, Text, StyleSheet, TouchableOpacity, DeviceInfo} from 'react-native'
+import {connect} from 'react-redux'
 import actions from '../action'
 import CommonNavigationBar from "../common/CommonNavigationBar"
 import Feather from 'react-native-vector-icons/Feather'
@@ -11,54 +11,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 class MyPage extends PureComponent {
 
-	renderLeftButton() {
-		return (
-			<TouchableOpacity onPress={() => {
-				alert('leftButton')
-			}}>
-				<View style={{ paddingLeft: 10 }}>
-					<Ionicons
-						name={'ios-arrow-back'}
-						size={24}
-						style={{ color: '#fff' }}
-					/>
-				</View>
-			</TouchableOpacity>
-		)
-	}
-
-	renderRightButton() {
-		return (
-			<TouchableOpacity onPress={() => {
-				alert('rightButton')
-			}}>
-				<View style={{ paddingRight: 10 }}>
-					<Feather
-						name={'search'}
-						size={20}
-						style={{ color: '#fff' }}
-					/>
-				</View>
-			</TouchableOpacity>
-		)
-	}
-
 	render() {
 		let statusBar = {
 			barStyle: 'light-content',
-			// backgroundColor: '#f26966'
 		}
 		let navigationBar = <CommonNavigationBar
 			title={'我的'}
 			statusBar={statusBar}
-			style={{ backgroundColor: '#f26966' }}
-			leftButton={this.renderLeftButton()}
-			rightButton={this.renderRightButton()}
+			style={{backgroundColor: '#f26966'}}
 		/>
 		return (
 			<View style={styles.container}>
 				{navigationBar}
-				<Text>hello world</Text>
 			</View>
 		)
 	}

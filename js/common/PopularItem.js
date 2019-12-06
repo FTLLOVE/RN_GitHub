@@ -1,8 +1,8 @@
 /**
  * PopularItem.js by ftl
  */
-import React, { PureComponent } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import React, {PureComponent} from 'react'
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import LazyImage from "animated-lazy-image"
 import NavigationUtil from '../navigator/NavigationUtil'
@@ -10,9 +10,10 @@ import NavigationUtil from '../navigator/NavigationUtil'
 export default class PopularItem extends PureComponent {
 
 	render() {
-		const { full_name, owner, description, forks, html_url } = this.props
+		const {full_name, owner, description, forks, html_url} = this.props
 		let o = {
-			html_url: html_url
+			html_url: html_url,
+			full_name: full_name
 		}
 		return (
 			<TouchableOpacity style={styles.container} onPress={() => {
@@ -25,7 +26,7 @@ export default class PopularItem extends PureComponent {
 						<Text>Author: </Text>
 						<LazyImage
 							source={owner.avatar_url}
-							style={{ width: 25, height: 25 }}
+							style={{width: 25, height: 25}}
 						/>
 					</View>
 
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
 		borderRadius: 3,
 		marginTop: 10,
 		shadowColor: 'gray',
-		shadowOffset: { width: 0.5, height: 0.5 },
+		shadowOffset: {width: 0.5, height: 0.5},
 		shadowOpacity: 0.4,
 		shadowRadius: 1,
 		elevation: 2

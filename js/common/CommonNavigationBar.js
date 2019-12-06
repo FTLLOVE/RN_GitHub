@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 		height: Platform.OS === 'ios' ? NAV_BAR_HEIGHT_IOS : NAV_BAR_HEIGHT_ANDROID,
 	},
 	title: {
-		fontSize: 20,
+		fontSize: 18,
 		color: '#fff'
 	},
 	navBarButton: {

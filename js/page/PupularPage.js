@@ -6,7 +6,6 @@ import {
 	View,
 	Text,
 	StyleSheet,
-	SafeAreaView,
 	FlatList,
 	RefreshControl,
 	ActivityIndicator,
@@ -197,7 +196,7 @@ class PopularPage extends PureComponent {
 					tabBarActiveTextColor={'#f26966'}
 					tabBarUnderlineStyle={{ backgroundColor: '#f26966' }}
 					tabBarInactiveTextColor={'#555'}
-					tabBarTextStyle={{ fontSize: 14 }}
+					tabBarTextStyle={{ fontSize: 14, width: '100%' }}
 					scrollWithoutAnimation={true}
 					renderTabBar={() => <ScrollableTabBar />}
 					onChangeTab={(val) => {
@@ -219,7 +218,8 @@ class PopularPage extends PureComponent {
 									this.state.showIndicator ? this.renderIndicator() :
 										this.renderContent()
 								}
-							</View>))
+							</View>
+						))
 					}
 				</ScrollableTabView>
 			</View>
@@ -230,9 +230,10 @@ class PopularPage extends PureComponent {
 
 const styles = StyleSheet.create({
 	container: {
-		// flex: 1,
+		flex: 1,
 	},
 	textStyle: {
+		flex: 1,
 		fontSize: 20,
 	}
 })

@@ -1,8 +1,8 @@
 /**
  * 详情页面 by ftl
  */
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, DeviceInfo } from 'react-native'
+import React, {PureComponent} from 'react'
+import {View, Text, StyleSheet, TouchableOpacity, DeviceInfo} from 'react-native'
 import CommonNavigationBar from '../common/CommonNavigationBar'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import NavigationUtil from '../navigator/NavigationUtil'
@@ -16,6 +16,7 @@ export default class DetailPage extends PureComponent {
 		super(props)
 		this.state = {
 			html_url: this.props.navigation.state.params.html_url,
+			full_name: this.props.navigation.state.params.full_name,
 			canGoBack: false
 		}
 	}
@@ -31,11 +32,11 @@ export default class DetailPage extends PureComponent {
 	renderLeftButton() {
 		return (
 			<TouchableOpacity onPress={this.handleBack.bind(this)}>
-				<View style={{ paddingLeft: 10 }}>
+				<View style={{paddingLeft: 10}}>
 					<Ionicons
 						name={'ios-arrow-back'}
 						size={24}
-						style={{ color: '#fff' }}
+						style={{color: '#fff'}}
 					/>
 				</View>
 			</TouchableOpacity>
@@ -44,13 +45,13 @@ export default class DetailPage extends PureComponent {
 
 	renderRightButton() {
 		return (
-			<View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 10 }}>
-				<TouchableOpacity style={{ marginRight: 5 }}>
+			<View style={{flexDirection: 'row', alignItems: 'center', paddingRight: 10}}>
+				<TouchableOpacity style={{marginRight: 5}}>
 					<View>
 						<AntDesign
 							name={'staro'}
 							size={24}
-							style={{ color: '#fff' }}
+							style={{color: '#fff'}}
 						/>
 					</View>
 				</TouchableOpacity>
@@ -60,7 +61,7 @@ export default class DetailPage extends PureComponent {
 						<EvilIcons
 							name={'share-google'}
 							size={28}
-							style={{ color: '#fff' }}
+							style={{color: '#fff'}}
 						/>
 					</View>
 				</TouchableOpacity>
@@ -69,24 +70,28 @@ export default class DetailPage extends PureComponent {
 	}
 
 	onNavigationStateChange(e) {
-		console.log("e: ", e)
 		this.setState({
 			canGoBack: e.canGoBack
 		})
 	}
 
 	render() {
+		let statusBar = {
+			barStyle: 'light-content'
+		}
+
+		let navigationBar = <CommonNavigationBar
+			leftButton={this.renderLeftButton()}
+			rightButton={this.renderRightButton()}
+			statusBar={statusBar}
+			title={this.state.full_name}
+		/>
 		return (
 			<View style={styles.container}>
-				<CommonNavigationBar
-					title={'详情页面'}
-					leftButton={this.renderLeftButton()}
-					rightButton={this.renderRightButton()}
-					titleStyle={{ fontSize: 18 }}
-				/>
+				{navigationBar}
 				<WebView
 					ref={webView => this.webView = webView}
-					source={{ uri: this.state.html_url }}
+					source={{uri: this.state.html_url}}
 					startInLoadingState={true}
 					onNavigationStateChange={e => this.onNavigationStateChange(e)}
 				/>
