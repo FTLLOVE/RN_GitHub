@@ -1,9 +1,9 @@
 /**
  * CommonNavigationBar.js by ftl
  */
-import React, { PureComponent } from 'react'
-import { View, Text, StyleSheet, Platform, DeviceInfo, StatusBar, ViewPropTypes } from 'react-native'
-import { PropTypes } from 'prop-types'
+import React, {PureComponent} from 'react'
+import {View, Text, StyleSheet, Platform, DeviceInfo, StatusBar, ViewPropTypes} from 'react-native'
+import {PropTypes} from 'prop-types'
 
 const NAV_BAR_HEIGHT_IOS = 44;//导航栏在iOS中的高度
 const NAV_BAR_HEIGHT_ANDROID = 50;//导航栏在Android中的高度
@@ -50,11 +50,11 @@ export default class CommonNavigationBar extends PureComponent {
 	render() {
 		let statusBar = !this.props.statusBar.hidden ?
 			<View style={styles.statusBar}>
-				<StatusBar {...this.props.statusBar} hidden={false} />
+				<StatusBar {...this.props.statusBar} hidden={false}/>
 			</View> : null
 
 		let titleView = this.props.titleView ? this.props.titleView :
-			<Text numberOfLines={1} ellipsizeMode={'head'} style={[styles.title, this.props.titleStyle]}>
+			<Text numberOfLines={1} style={[styles.title, this.props.titleStyle]}>
 				{this.props.title}
 			</Text>
 
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
 		color: '#fff'
 	},
 	navBarButton: {
+		marginLeft: 10,
 		alignItems: 'center'
 	},
 	navBarTitleContainer: {
@@ -103,6 +104,6 @@ const styles = StyleSheet.create({
 		left: 40,
 		right: 40,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
 	}
 })
