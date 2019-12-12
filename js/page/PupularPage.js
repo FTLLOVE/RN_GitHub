@@ -9,7 +9,8 @@ import {
 	FlatList,
 	RefreshControl,
 	ActivityIndicator,
-	DeviceInfo
+	DeviceInfo,
+	SafeAreaView
 } from 'react-native'
 import {connect} from 'react-redux'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
@@ -42,6 +43,7 @@ class PopularPage extends PureComponent {
 		return (
 			<PopularItem
 				{...item}
+				index={1}
 			/>
 		)
 	}
@@ -86,7 +88,7 @@ class PopularPage extends PureComponent {
 				keyExtractor={item => item.id}
 				refreshControl={
 					<RefreshControl
-						colors={['#f26966', '#00ff00', '#0000ff']}
+						colors={['#2b98f4', '#00ff00', '#0000ff']}
 						progressBackgroundColor={'#fff'}
 						refreshing={this.state.refreshing}
 						onRefresh={this.onRefresh.bind(this)}
@@ -180,13 +182,9 @@ class PopularPage extends PureComponent {
 	}
 
 	render() {
-		let statusBar = {
-			barStyle: 'light-content',
-			hidden: false
-		}
+
 		let navigationBar = <CommonNavigationBar
 			title={'最热'}
-			statusBar={statusBar}
 		/>
 		return (
 			<View style={{flex: 1, marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0}}>
@@ -194,8 +192,8 @@ class PopularPage extends PureComponent {
 				<ScrollableTabView
 					style={styles.container}
 					tabBarBackgroundColor={'#fff'}
-					tabBarActiveTextColor={'#f26966'}
-					tabBarUnderlineStyle={{backgroundColor: '#f26966'}}
+					tabBarActiveTextColor={'#2b98f4'}
+					tabBarUnderlineStyle={{backgroundColor: '#2b98f4'}}
 					tabBarInactiveTextColor={'#555'}
 					tabBarTextStyle={{fontSize: 14, width: '100%'}}
 					scrollWithoutAnimation={true}

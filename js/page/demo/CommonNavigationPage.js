@@ -50,7 +50,7 @@ class CommonNavigationPage extends PureComponent {
 		let navigationBar = <CommonNavigationBar
 			title={'我的'}
 			statusBar={statusBar}
-			style={{ backgroundColor: '#f26966' }}
+			style={{ backgroundColor: '#2b98f4' }}
 			leftButton={this.renderLeftButton()}
 			rightButton={this.renderRightButton()}
 		/>

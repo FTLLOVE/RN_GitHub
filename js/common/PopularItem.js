@@ -10,7 +10,7 @@ import NavigationUtil from '../navigator/NavigationUtil'
 export default class PopularItem extends PureComponent {
 
 	render() {
-		const {full_name, owner, description, forks, html_url} = this.props
+		const {full_name, owner, description, forks, html_url, index} = this.props
 		let o = {
 			html_url: html_url,
 			full_name: full_name
@@ -37,6 +37,7 @@ export default class PopularItem extends PureComponent {
 					</View>
 
 					<TouchableOpacity onPress={() => {
+
 					}}>
 						<FontAwesome
 							name={'star-o'}

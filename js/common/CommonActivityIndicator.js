@@ -9,7 +9,7 @@ export default class CommonActivityIndicator extends PureComponent {
 		return (
 			<View style={styles.container}>
 				<ActivityIndicator
-					color={'#f26966'}
+					color={'#2b98f4'}
 					size={'large'}
 					animating={this.props.showIndicator}
 				/>

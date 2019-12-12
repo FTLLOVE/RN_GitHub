@@ -1,7 +1,7 @@
-import React, {PureComponent} from 'react'
-import {View, Text, TextInput, Button, StyleSheet, AsyncStorage, Dimensions} from 'react-native'
+import React, { PureComponent } from 'react'
+import { View, Text, TextInput, Button, StyleSheet, AsyncStorage, Dimensions } from 'react-native'
 
-const {width} = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 const KEY = "AS_KEY"
 
 export default class AsyncStoragePage extends PureComponent {
@@ -14,7 +14,21 @@ export default class AsyncStoragePage extends PureComponent {
 	}
 
 	async doSave() {
-		await AsyncStorage.setItem(KEY, this.state.showText)
+		let originArr = []
+		await AsyncStorage.getItem(KEY)
+			.then(val => {
+				debugger
+				if (val !== null) {
+					console.log("-----> ", typeof val)
+					val.push(this.state.showText)
+					AsyncStorage.setItem(KEY, JSON.stringify(originArr))
+						.catch(e && console.log(e.toString()))
+				} else {
+					originArr.push(this.state.showText)
+					AsyncStorage.setItem(KEY, JSON.stringify(originArr))
+						.catch(e && console.log(e.toString()))
+				}
+			})
 			.catch(e => {
 				e && console.log(e.toString())
 			})
@@ -23,7 +37,7 @@ export default class AsyncStoragePage extends PureComponent {
 	async getData() {
 		await AsyncStorage.getItem(KEY)
 			.then(val => {
-				console.log("val: ", val)
+				console.log("val: ", JSON.parse(val))
 				this.setState({
 					showText: val
 				})
@@ -49,12 +63,12 @@ export default class AsyncStoragePage extends PureComponent {
 							showText: e
 						})
 					}}
-					style={{width: 300, height: 30, borderWidth: 1, borderColor: '#000'}}
+					style={{ width: 300, height: 30, borderWidth: 1, borderColor: '#000' }}
 				/>
-				<View style={{width: width, height: 50, flexDirection: 'row', justifyContent: 'space-between'}}>
-					<Button title={'存储'} onPress={this.doSave.bind(this)}/>
-					<Button title={'获取'} onPress={this.getData.bind(this)}/>
-					<Button title={'删除'} onPress={this.doRemove.bind(this)}/>
+				<View style={{ width: width, height: 50, flexDirection: 'row', justifyContent: 'space-between' }}>
+					<Button title={'存储'} onPress={this.doSave.bind(this)} />
+					<Button title={'获取'} onPress={this.getData.bind(this)} />
+					<Button title={'删除'} onPress={this.doRemove.bind(this)} />
 				</View>
 
 				<Text>

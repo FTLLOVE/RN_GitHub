@@ -1,7 +1,7 @@
 /**
  * 趋势页面 by ftl
  */
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import {
 	View,
 	Text,
@@ -12,12 +12,12 @@ import {
 	RefreshControl,
 	ActivityIndicator
 } from 'react-native'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import actions from '../action'
 import CommonNavigationBar from '../common/CommonNavigationBar'
 import ActionSheet from 'react-native-actionsheet'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
 import DataStore from "../expand/dao/DataStore"
 import PopularItem from "../common/PopularItem"
 import CommonActivityIndicator from "../common/CommonActivityIndicator"
@@ -57,7 +57,7 @@ class TrendingPage extends PureComponent {
 				keyExtractor={() => Math.random(2)}
 				refreshControl={
 					<RefreshControl
-						colors={['#f26966', '#00ff00', '#0000ff']}
+						colors={['#2b98f4', '#00ff00', '#0000ff']}
 						refreshing={this.state.refreshing}
 						progressBackgroundColor={'#fff'}
 						onRefresh={this.onRefresh.bind(this)}
@@ -93,7 +93,7 @@ class TrendingPage extends PureComponent {
 			loadStatus: 2
 		})
 		let keyword = ""
-		let {selectedLabel, currentPage} = this.state
+		let { selectedLabel, currentPage } = this.state
 		if (selectedLabel === '' || selectedLabel === undefined || selectedLabel === null) {
 			keyword = this.state.tabs[0]
 		} else {
@@ -111,16 +111,16 @@ class TrendingPage extends PureComponent {
 	 * 渲染底部加载
 	 */
 	renderFooter() {
-		const {loadStatus} = this.state
+		const { loadStatus } = this.state
 		if (loadStatus === 1) {
 			return (
-				<View style={{alignItems: 'center', marginTop: 10, marginBottom: 10}}>
-					<Text style={{alignItems: 'center', fontSize: 14, color: '#ccc'}}>无更多内容</Text>
+				<View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
+					<Text style={{ alignItems: 'center', fontSize: 14, color: '#ccc' }}>无更多内容</Text>
 				</View>
 			)
 		} else if (loadStatus === 2) {
 			return (
-				<View style={{height: 30, width: CommonDimensions.width, marginTop: 10}}>
+				<View style={{ height: 30, width: CommonDimensions.width, marginTop: 10 }}>
 					<ActivityIndicator
 						size={'small'}
 						animating={this.state.loadStatus === 2}
@@ -129,7 +129,7 @@ class TrendingPage extends PureComponent {
 			)
 		} else {
 			return (
-				<View style={{alignItems: 'center'}}></View>
+				<View style={{ alignItems: 'center' }}></View>
 			)
 		}
 	}
@@ -140,10 +140,11 @@ class TrendingPage extends PureComponent {
 	 * @returns {*}
 	 */
 	renderItem(data) {
-		let {item} = data
+		let { item } = data
 		return (
 			<PopularItem
 				{...item}
+				index={2}
 			/>
 		)
 	}
@@ -234,29 +235,24 @@ class TrendingPage extends PureComponent {
 	}
 
 	render() {
-		let statusBar = {
-			barStyle: "light-content"
-		}
-
 		let titleView = <View style={styles.titleView}>
-			<Text style={{color: '#fff', fontSize: 18, marginRight: 4}}>趋势</Text>
+			<Text style={{ color: '#fff', fontSize: 18, marginRight: 4 }}>趋势</Text>
 			<TouchableOpacity
-				style={{flexDirection: 'row', alignItems: 'center'}}
+				style={{ flexDirection: 'row', alignItems: 'center' }}
 				onPress={() => {
 					this.ActionSheet.show()
 				}}>
-				<Text style={{fontSize: 16, color: '#fff'}}>{this.state.options[this.state.selectedIndex]}</Text>
+				<Text style={{ fontSize: 16, color: '#fff' }}>{this.state.options[this.state.selectedIndex]}</Text>
 				<AntDesign
 					name={'caretdown'}
 					size={10}
-					style={{color: '#fff'}}
+					style={{ color: '#fff' }}
 				/>
 			</TouchableOpacity>
 		</View>
 
 		let navigationBar = <CommonNavigationBar
 			title={'趋势'}
-			statusBar={statusBar}
 			titleView={titleView}
 		/>
 
@@ -264,14 +260,14 @@ class TrendingPage extends PureComponent {
 			<View style={styles.container}>
 				{navigationBar}
 				<ScrollableTabView
-					style={{flex: 1}}
+					style={{ flex: 1 }}
 					tabBarBackgroundColor={'#fff'}
-					tabBarActiveTextColor={'#f26966'}
-					tabBarUnderlineStyle={{backgroundColor: '#f26966'}}
+					tabBarActiveTextColor={'#2b98f4'}
+					tabBarUnderlineStyle={{ backgroundColor: '#2b98f4' }}
 					tabBarInactiveTextColor={'#555'}
-					tabBarTextStyle={{fontSize: 14, width: '100%'}}
+					tabBarTextStyle={{ fontSize: 14, width: '100%' }}
 					scrollWithoutAnimation={true}
-					renderTabBar={() => <ScrollableTabBar/>}
+					renderTabBar={() => <ScrollableTabBar />}
 					onChangeTab={(val) => {
 						this.setState({
 							showIndicator: true,

@@ -1,9 +1,9 @@
 /**
  * CommonNavigationBar.js by ftl
  */
-import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, Platform, DeviceInfo, StatusBar, ViewPropTypes} from 'react-native'
-import {PropTypes} from 'prop-types'
+import React, { PureComponent } from 'react'
+import { View, Text, StyleSheet, Platform, DeviceInfo, StatusBar, ViewPropTypes } from 'react-native'
+import { PropTypes } from 'prop-types'
 
 const NAV_BAR_HEIGHT_IOS = 44;//导航栏在iOS中的高度
 const NAV_BAR_HEIGHT_ANDROID = 50;//导航栏在Android中的高度
@@ -22,7 +22,6 @@ export default class CommonNavigationBar extends PureComponent {
 	static defaultProps = {
 		statusBar: {
 			barStyle: 'dark-content',
-			hidden: true
 		}
 	}
 
@@ -50,7 +49,7 @@ export default class CommonNavigationBar extends PureComponent {
 	render() {
 		let statusBar = !this.props.statusBar.hidden ?
 			<View style={styles.statusBar}>
-				<StatusBar {...this.props.statusBar} hidden={false}/>
+				<StatusBar {...this.props.statusBar} />
 			</View> : null
 
 		let titleView = this.props.titleView ? this.props.titleView :
@@ -78,10 +77,11 @@ export default class CommonNavigationBar extends PureComponent {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#f26966'
+		backgroundColor: '#2b98f4'
 	},
 	statusBar: {
-		height: Platform.OS === 'ios' ? STATUS_BAR_HEIGHT : 0
+		height: Platform.OS === 'ios' ? (DeviceInfo.isIPhoneX_deprecated ? 0 : 20) : 0,
+		backgroundColor: '#2b98f4'
 	},
 	navBar: {
 		flexDirection: 'row',
